@@ -80,7 +80,7 @@
 </head>
 <body>
     <div id="coffre">
-        <img id="coffre-img" src="img/Chest.png" alt="Coffre verrouillé">
+        <img id="coffre-img" src="Chest.png" alt="Coffre verrouillé">
         <div>
             <input type="text" class="code-input" placeholder="Entre le code magique :)">
             <button onclick="verifierCode()">Ouvrir le coffre</button>
@@ -153,7 +153,7 @@
         function verifierCode() {
             const code = document.querySelector('.code-input').value.toUpperCase();
             if (code === 'SAINTVALENTIN') {
-                document.getElementById('coffre-img').src = 'img/Diplome.jpg';
+                document.getElementById('coffre-img').src = 'Diplome.jpg';
                 document.getElementById('coffre-img').style.width = '1000px';
                 document.getElementById('message').style.display = 'block';
             } else {
