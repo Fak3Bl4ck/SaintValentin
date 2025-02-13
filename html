@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Coffre Secret</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: #ffe6f2;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #coffre {
+            margin: 30px auto;
+            transition: 0.3s;
+        }
+
+        #coffre-img {
+            width: 200px;
+            cursor: pointer;
+        }
+
+        .code-input {
+            margin: 20px;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 15px;
+            border: 3px solid #ff99cc;
+        }
+
+        .question {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        button {
+            background: #ff99cc;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ff66b3;
+        }
+
+        .correct {
+            background: #90ee90 !important;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(5px); }
+            50% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        #message {
+            display: none;
+            color: #ff0066;
+            font-size: 24px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="coffre">
+        <img id="coffre-img" src="img/Chest.png" alt="Coffre verrouillé">
+        <div>
+            <input type="text" class="code-input" placeholder="Entre le code magique :)">
+            <button onclick="verifierCode()">Ouvrir le coffre</button>
+        </div>
+    </div>
+
+    <div id="message">Bravo tu as trouver le code t'es la meilleur !!! c'est "SAINTVALENTIN" </div>
+
+    <div class="question" id="q1">
+        <h3> Notre date d'anniversaire ? 🌸</h3>
+        <button>15 mars 2022</button>
+        <button data-correct>29 avril 2023</button>
+        <button>30 mai 2024</button>
+    </div>
+
+    <div class="question">
+        <h3> Le nom de nos bébés canards ? 🐥</h3>
+        <button class="answer">Piaf et Plume</button>
+        <button data-correct>Woink Woink et Coin Coin</button>
+        <button class="answer">Ducky et Donald</button>
+    </div>
+
+    <div class="question">
+        <h3> Nos futurs enfants s'appelleront ? 👧</h3>
+        <button class="answer">Pierre et Sophie</button>
+        <button data-correct>William et Lilly</button>
+        <button class="answer">Max et Chloé</button>
+    </div>
+
+    <div class="question">
+        <h3> Qui aime le plus l'autre ? 💞</h3>
+        <button class="answer">Misa</button>
+        <button data-correct>Ashwin</button>
+        <button class="answer">Notre amour est incalculable</button>
+    </div>
+
+    <div class="question">
+        <h3> Allons-nous nous marier ? 💒</h3>
+        <button class="answer">Peut-être</button>
+        <button data-correct>OUIIIII</button>
+        <button class="answer">Jamais</button>
+    </div>
+
+    <!-- Ajoute les autres questions de la même manière avec data-correct sur la bonne réponse -->
+
+    <script>
+        let reponsesCorrectes = 0;
+
+        // Initialisation des questions
+        document.querySelectorAll('[data-correct]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!this.classList.contains('correct')) {
+                    this.classList.add('correct');
+                    this.parentElement.querySelectorAll('button').forEach(b => b.disabled = true);
+                    reponsesCorrectes++;
+                    verifierProgression();
+                }
+            });
+        });
+
+        function verifierProgression() {
+            if (reponsesCorrectes === 5) {
+                document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+                document.getElementById('message').style.display = 'block';
+            } else {
+                document.querySelectorAll('.question')[reponsesCorrectes].style.display = 'block';
+            }
+        }
+
+        function verifierCode() {
+            const code = document.querySelector('.code-input').value.toUpperCase();
+            if (code === 'SAINTVALENTIN') {
+                document.getElementById('coffre-img').src = 'img/Diplome.jpg';
+                document.getElementById('coffre-img').style.width = '1000px';
+                document.getElementById('message').style.display = 'block';
+            } else {
+                document.querySelector('.code-input').style.borderColor = 'red';
+                setTimeout(() => document.querySelector('.code-input').style.borderColor = '#ff99cc', 500);
+            }
+        }
+
+        // Démarrer avec la première question
+        verifierProgression();
+    </script>
+</body>
+</html>
